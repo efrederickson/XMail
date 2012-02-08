@@ -1,0 +1,423 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{ED235059-C297-499E-B48E-632D1C68F5AE}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>WindowsAPICodePack</RootNamespace>
+    <AssemblyName>WindowsAPICodePack</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsFormsIntegration">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppRestartRecovery\ApplicationRecoveryException.cs" />
+    <Compile Include="AppRestartRecovery\ApplicationRestartRecoveryManager.cs" />
+    <Compile Include="AppRestartRecovery\RecoveryData.cs" />
+    <Compile Include="AppRestartRecovery\RecoverySettings.cs" />
+    <Compile Include="AppRestartRecovery\RestartRestrictions.cs" />
+    <Compile Include="AppRestartRecovery\RestartSettings.cs" />
+    <Compile Include="CommonFileDialogs\CommonFileDialog.cs" />
+    <Compile Include="CommonFileDialogs\CommonFileDialogButton.cs" />
+    <Compile Include="CommonFileDialogs\CommonFileDialogCheckBox.cs" />
+    <Compile Include="CommonFileDialogs\CommonFileDialogComboBox.cs" />
+    <Compile Include="CommonFileDialogs\CommonFileDialogControl.cs" />
+    <Compile Include="CommonFileDialogs\CommonFileDialogControlCollection.cs" />
+    <Compile Include="CommonFileDialogs\CommonFileDialogFilter.cs" />
+    <Compile Include="CommonFileDialogs\CommonFileDialogFilterCollection.cs" />
+    <Compile Include="CommonFileDialogs\CommonFileDialogFolderChangeEventArgs.cs" />
+    <Compile Include="CommonFileDialogs\CommonFileDialogGroupBox.cs" />
+    <Compile Include="CommonFileDialogs\CommonFileDialogLabel.cs" />
+    <Compile Include="CommonFileDialogs\CommonFileDialogMenu.cs" />
+    <Compile Include="CommonFileDialogs\CommonFileDialogProminentControl.cs" />
+    <Compile Include="CommonFileDialogs\CommonFileDialogRadioButtonList.cs" />
+    <Compile Include="CommonFileDialogs\CommonFileDialogResult.cs" />
+    <Compile Include="CommonFileDialogs\CommonFileDialogSeperator.cs" />
+    <Compile Include="CommonFileDialogs\CommonFileDialogStandardFilters.cs" />
+    <Compile Include="CommonFileDialogs\CommonFileDialogTextBox.cs" />
+    <Compile Include="CommonFileDialogs\CommonOpenFileDialog.cs" />
+    <Compile Include="CommonFileDialogs\CommonSaveFileDialog.cs" />
+    <Compile Include="CommonFileDialogs\ICommonFileDialogIndexedControls.cs" />
+    <Compile Include="Common\DefaultShellImageSizes.cs" />
+    <Compile Include="Common\EnumUnknown.cs" />
+    <Compile Include="Common\EventHandlerExtensionMethods.cs" />
+    <Compile Include="Common\IconReference.cs" />
+    <Compile Include="Common\NativePoint.cs" />
+    <Compile Include="Common\NativeRect.cs" />
+    <Compile Include="Common\SearchCondition.cs" />
+    <Compile Include="Common\SearchConditionFactory.cs" />
+    <Compile Include="Common\ShellEnums.cs" />
+    <Compile Include="Common\ShellException.cs" />
+    <Compile Include="Common\ShellFile.cs" />
+    <Compile Include="Common\ShellFileSystemFolder.cs" />
+    <Compile Include="Common\ShellFolder.cs" />
+    <Compile Include="Common\ShellFolderItems.cs" />
+    <Compile Include="Common\ShellHelper.cs" />
+    <Compile Include="Common\ShellItemArray.cs" />
+    <Compile Include="Common\ShellLibrary.cs" />
+    <Compile Include="Common\ShellLink.cs" />
+    <Compile Include="Common\ShellNonFileSystemFolder.cs" />
+    <Compile Include="Common\ShellNonFileSystemItem.cs" />
+    <Compile Include="Common\ShellObject.cs" />
+    <Compile Include="Common\ShellObjectCollection.cs" />
+    <Compile Include="Common\ShellObjectContainer.cs" />
+    <Compile Include="Common\ShellObjectFactory.cs" />
+    <Compile Include="Common\ShellSavedSearchCollection.cs" />
+    <Compile Include="Common\ShellSearchCollection.cs" />
+    <Compile Include="Common\ShellSearchConnector.cs" />
+    <Compile Include="Common\ShellSearchFolder.cs" />
+    <Compile Include="Common\ShellThumbnail.cs" />
+    <Compile Include="Common\ShellThumbnailEnums.cs" />
+    <Compile Include="Common\SortColumn.cs" />
+    <Compile Include="Controls\CommandLinkWinforms.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\CommandLinkWPF.xaml.cs">
+      <DependentUpon>CommandLinkWPF.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DesktopWindowManager\DesktopWindowManagerNativeMethods.cs" />
+    <Compile Include="DesktopWindowManager\GlassEvents.cs" />
+    <Compile Include="DesktopWindowManager\GlassForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DesktopWindowManager\GlassWindow.cs" />
+    <Compile Include="Dialogs\Common\DialogControl.cs" />
+    <Compile Include="Dialogs\Common\DialogControlCollection.cs" />
+    <Compile Include="Dialogs\Common\DialogsDefaults.cs" />
+    <Compile Include="Dialogs\Common\IDialogControlHost.cs" />
+    <Compile Include="Dialogs\TaskDialogs\TaskDialog.cs" />
+    <Compile Include="Dialogs\TaskDialogs\TaskDialogBar.cs" />
+    <Compile Include="Dialogs\TaskDialogs\TaskDialogButton.cs" />
+    <Compile Include="Dialogs\TaskDialogs\TaskDialogButtonBase.cs" />
+    <Compile Include="Dialogs\TaskDialogs\TaskDialogClosingEventArgs.cs" />
+    <Compile Include="Dialogs\TaskDialogs\TaskDialogCommandLink.cs" />
+    <Compile Include="Dialogs\TaskDialogs\TaskDialogControl.cs" />
+    <Compile Include="Dialogs\TaskDialogs\TaskDialogDefaults.cs" />
+    <Compile Include="Dialogs\TaskDialogs\TaskDialogExpandedInfoMode.cs" />
+    <Compile Include="Dialogs\TaskDialogs\TaskDialogHyperlinkClickedEventArgs.cs" />
+    <Compile Include="Dialogs\TaskDialogs\TaskDialogProgressBar.cs" />
+    <Compile Include="Dialogs\TaskDialogs\TaskDialogProgressBarState.cs" />
+    <Compile Include="Dialogs\TaskDialogs\TaskDialogRadioButton.cs" />
+    <Compile Include="Dialogs\TaskDialogs\TaskDialogResult.cs" />
+    <Compile Include="Dialogs\TaskDialogs\TaskDialogStandardButton.cs" />
+    <Compile Include="Dialogs\TaskDialogs\TaskDialogStandardIcon.cs" />
+    <Compile Include="Dialogs\TaskDialogs\TaskDialogStartupLocation.cs" />
+    <Compile Include="Dialogs\TaskDialogs\TaskDialogTickEventArgs.cs" />
+    <Compile Include="ExplorerBrowser\CommonControlException.cs" />
+    <Compile Include="ExplorerBrowser\ExplorerBrowser.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ExplorerBrowser\ExplorerBrowser.WPF.xaml.cs">
+      <DependentUpon>ExplorerBrowser.WPF.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExplorerBrowser\ExplorerBrowserContentOptions.cs" />
+    <Compile Include="ExplorerBrowser\ExplorerBrowserEnums.cs" />
+    <Compile Include="ExplorerBrowser\ExplorerBrowserEvents.cs" />
+    <Compile Include="ExplorerBrowser\ExplorerBrowserPaneVisibility.cs" />
+    <Compile Include="ExplorerBrowser\ExplorerBrowserViewEvents.cs" />
+    <Compile Include="ExplorerBrowser\NavigationLog.cs" />
+    <Compile Include="ExplorerBrowser\NavigationLogEnums.cs" />
+    <Compile Include="ExplorerBrowser\NavigationLogEvents.cs" />
+    <Compile Include="ExplorerBrowser\NavigationOptions.cs" />
+    <Compile Include="ExtendedLinguistics\IMappingFormatter.cs" />
+    <Compile Include="ExtendedLinguistics\InteropTools.cs" />
+    <Compile Include="ExtendedLinguistics\LinguisticException.cs" />
+    <Compile Include="ExtendedLinguistics\MappingActionAsyncResult.cs" />
+    <Compile Include="ExtendedLinguistics\MappingAsyncResult.cs" />
+    <Compile Include="ExtendedLinguistics\MappingAvailableServices.cs" />
+    <Compile Include="ExtendedLinguistics\MappingDataRange.cs" />
+    <Compile Include="ExtendedLinguistics\MappingEnumOptions.cs" />
+    <Compile Include="ExtendedLinguistics\MappingPropertyBag.cs" />
+    <Compile Include="ExtendedLinguistics\MappingRecognizeAsyncResult.cs" />
+    <Compile Include="ExtendedLinguistics\MappingResultState.cs" />
+    <Compile Include="ExtendedLinguistics\MappingService.cs" />
+    <Compile Include="ExtendedLinguistics\NullTerminatedStringFormatter.cs" />
+    <Compile Include="ExtendedLinguistics\ServiceCache.cs" />
+    <Compile Include="ExtendedLinguistics\StringArrayFormatter.cs" />
+    <Compile Include="ExtendedLinguistics\StringFormatter.cs" />
+    <Compile Include="ExtendedLinguistics\Win32NativeMethods.cs" />
+    <Compile Include="ExtendedLinguistics\Win32Structs.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Interop\AppRestartRecovery\AppRestartRecoveryNativeMethods.cs" />
+    <Compile Include="Interop\Common\IntPtrExtensions.cs" />
+    <Compile Include="Interop\Common\ShellCOMClasses.cs" />
+    <Compile Include="Interop\Common\ShellCOMGuids.cs" />
+    <Compile Include="Interop\Common\ShellCOMInterfaces.cs" />
+    <Compile Include="Interop\Common\ShellNativeMethods.cs" />
+    <Compile Include="Interop\Common\ShellNativeStructs.cs" />
+    <Compile Include="Interop\Common\WindowUtilities.cs" />
+    <Compile Include="Interop\CoreErrorHelper.cs" />
+    <Compile Include="Interop\CoreHelpers.cs" />
+    <Compile Include="Interop\CoreNativeMethods.cs" />
+    <Compile Include="Interop\Dialogs\DialogsCOMClasses.cs" />
+    <Compile Include="Interop\Dialogs\DialogsCOMInterfaces.cs" />
+    <Compile Include="Interop\Dialogs\DialogShowState.cs" />
+    <Compile Include="Interop\ExplorerBrowser\ExplorerBrowserCOMGuids.cs" />
+    <Compile Include="Interop\ExplorerBrowser\ExplorerBrowserCOMInterfaces.cs" />
+    <Compile Include="Interop\ExplorerBrowser\ExplorerBrowserNativeMethods.cs" />
+    <Compile Include="Interop\HandlerNativeMethods.cs" />
+    <Compile Include="Interop\ISensor.cs" />
+    <Compile Include="Interop\ISensorCollection.cs" />
+    <Compile Include="Interop\ISensorDataReport.cs" />
+    <Compile Include="Interop\ISensorManager.cs" />
+    <Compile Include="Interop\ISensorManagerEnums.cs" />
+    <Compile Include="Interop\ISensorManagerEvents.cs" />
+    <Compile Include="Interop\KnownFolders\KnownFoldersCOMGuids.cs" />
+    <Compile Include="Interop\KnownFolders\KnownFoldersCOMInterfaces.cs" />
+    <Compile Include="Interop\KnownFolders\KnownFoldersNativeMethods.cs" />
+    <Compile Include="Interop\NetworkList\INetwork.cs" />
+    <Compile Include="Interop\NetworkList\INetworkConnection.cs" />
+    <Compile Include="Interop\NetworkList\INetworkListManager.cs" />
+    <Compile Include="Interop\NetworkList\NetworkListManagerClass.cs" />
+    <Compile Include="Interop\PortableDevice.cs" />
+    <Compile Include="Interop\PowerManagement\PowerManagementNativeMethods.cs" />
+    <Compile Include="Interop\PropertySystem\PropertySystemCOMInterfaces.cs" />
+    <Compile Include="Interop\PropertySystem\PropertySystemNativeMethods.cs" />
+    <Compile Include="Interop\SensorNativeMethods.cs" />
+    <Compile Include="Interop\ShellObjectWatcher\ShellObjectWatcherNativeMethods.cs" />
+    <Compile Include="Interop\StockIcons\StockIconsNativeMethods.cs" />
+    <Compile Include="Interop\Taskbar\TabbedThumbnailNativeMethods.cs" />
+    <Compile Include="Interop\Taskbar\TaskbarCOMInterfaces.cs" />
+    <Compile Include="Interop\Taskbar\TaskbarNativeMethods.cs" />
+    <Compile Include="Interop\TaskDialogs\NativeTaskDialog.cs" />
+    <Compile Include="Interop\TaskDialogs\NativeTaskDialogSettings.cs" />
+    <Compile Include="Interop\TaskDialogs\TaskDialogNativeMethods.cs" />
+    <Compile Include="Interop\WindowMessage.cs" />
+    <Compile Include="KnownFolders\DefinitionOptions.cs" />
+    <Compile Include="KnownFolders\FileSystemKnownFolder.cs" />
+    <Compile Include="KnownFolders\FolderCategory.cs" />
+    <Compile Include="KnownFolders\FolderProperties.cs" />
+    <Compile Include="KnownFolders\FoldersIdentifiers.cs" />
+    <Compile Include="KnownFolders\FolderTypes.cs" />
+    <Compile Include="KnownFolders\IKnownFolder.cs" />
+    <Compile Include="KnownFolders\KnownFolderHelper.cs" />
+    <Compile Include="KnownFolders\KnownFolders.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="KnownFolders\KnownFolderSettings.cs" />
+    <Compile Include="KnownFolders\NonFileSystemKnownFolder.cs" />
+    <Compile Include="KnownFolders\RedirectionCapabilities.cs" />
+    <Compile Include="KnownFolders\RetrievalOptions.cs" />
+    <Compile Include="Metadata\EventInterest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Metadata\SensorCategories.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Metadata\SensorConnection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Metadata\SensorDescriptionAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Metadata\SensorPropertyKeys.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Metadata\SensorState.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Metadata\SensorTypes.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="NetworkList\Network.cs" />
+    <Compile Include="NetworkList\NetworkCollection.cs" />
+    <Compile Include="NetworkList\NetworkConnection.cs" />
+    <Compile Include="NetworkList\NetworkConnectionCollection.cs" />
+    <Compile Include="NetworkList\NetworkListEnums.cs" />
+    <Compile Include="NetworkList\NetworkListManager.cs" />
+    <Compile Include="ObjectModel\Sensor.cs" />
+    <Compile Include="ObjectModel\SensorData.cs" />
+    <Compile Include="ObjectModel\SensorList.cs" />
+    <Compile Include="ObjectModel\SensorManager.cs" />
+    <Compile Include="ObjectModel\SensorPlatformException.cs" />
+    <Compile Include="ObjectModel\SensorReport.cs" />
+    <Compile Include="PowerManagement\BatteryState.cs" />
+    <Compile Include="PowerManagement\EventManager.cs" />
+    <Compile Include="PowerManagement\ExecutionState.cs" />
+    <Compile Include="PowerManagement\MessageManager.cs" />
+    <Compile Include="PowerManagement\PersonalityGuids.cs" />
+    <Compile Include="PowerManagement\Power.cs" />
+    <Compile Include="PowerManagement\PowerManager.cs" />
+    <Compile Include="PowerManagement\PowerManagerException.cs" />
+    <Compile Include="PowerManagement\PowerPersonality.cs" />
+    <Compile Include="PowerManagement\PowerSource.cs" />
+    <Compile Include="PreviewHandlers\ManagedInitializationInterfaces.cs" />
+    <Compile Include="PreviewHandlers\PreviewHandler.cs" />
+    <Compile Include="PreviewHandlers\PreviewHandlerAttribute.cs" />
+    <Compile Include="PreviewHandlers\WinformsPreviewHandler.cs" />
+    <Compile Include="PreviewHandlers\WpfPreviewHandler.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertySystem\IShellProperty.cs" />
+    <Compile Include="PropertySystem\PropertyKey.cs" />
+    <Compile Include="PropertySystem\PropertySystemException.cs" />
+    <Compile Include="PropertySystem\PropVariant.cs" />
+    <Compile Include="PropertySystem\PropVariantNativeMethods.cs" />
+    <Compile Include="PropertySystem\ShellProperties.cs" />
+    <Compile Include="PropertySystem\ShellProperty.cs" />
+    <Compile Include="PropertySystem\ShellPropertyCollection.cs" />
+    <Compile Include="PropertySystem\ShellPropertyDescription.cs" />
+    <Compile Include="PropertySystem\ShellPropertyDescriptionsCache.cs" />
+    <Compile Include="PropertySystem\ShellPropertyEnums.cs" />
+    <Compile Include="PropertySystem\ShellPropertyEnumType.cs" />
+    <Compile Include="PropertySystem\ShellPropertyFactory.cs" />
+    <Compile Include="PropertySystem\ShellPropertyWriter.cs" />
+    <Compile Include="PropertySystem\StronglyTypedProperties.cs" />
+    <Compile Include="PropertySystem\SystemProperties.cs" />
+    <Compile Include="PropertySystem\WindowProperties.cs" />
+    <Compile Include="Resources\LocalizedMessages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LocalizedMessages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SafeHandles\SafeIconHandle.cs" />
+    <Compile Include="SafeHandles\SafeRegionHandle.cs" />
+    <Compile Include="SafeHandles\SafeWindowHandle.cs" />
+    <Compile Include="SafeHandles\ZeroInvalidHandle.cs" />
+    <Compile Include="Sensors\Light\AmbientLightSensor.cs" />
+    <Compile Include="Sensors\Motion\Accelerometer3D.cs" />
+    <Compile Include="Sensors\UnknownSensor.cs" />
+    <Compile Include="ShellObjectWatcher\ChangeNotifyEventManager.cs" />
+    <Compile Include="ShellObjectWatcher\ChangeNotifyLock.cs" />
+    <Compile Include="ShellObjectWatcher\MessageListener.cs" />
+    <Compile Include="ShellObjectWatcher\MessageListenerFilter.cs" />
+    <Compile Include="ShellObjectWatcher\ShellObjectNotificationEventArgs.cs" />
+    <Compile Include="ShellObjectWatcher\ShellObjectWatcher.cs" />
+    <Compile Include="ShellObjectWatcher\ShellObjectWatcherEnums.cs" />
+    <Compile Include="StockIcons\StockIcon.cs" />
+    <Compile Include="StockIcons\StockIconEnums.cs" />
+    <Compile Include="StockIcons\StockIcons.cs" />
+    <Compile Include="StorageStream.cs" />
+    <Compile Include="Taskbar\JumpList.cs" />
+    <Compile Include="Taskbar\JumpListCustomCategory.cs" />
+    <Compile Include="Taskbar\JumpListCustomCategoryCollection.cs" />
+    <Compile Include="Taskbar\JumpListItem.cs" />
+    <Compile Include="Taskbar\JumpListItemCollection.cs" />
+    <Compile Include="Taskbar\JumpListLink.cs" />
+    <Compile Include="Taskbar\JumpListSeparator.cs" />
+    <Compile Include="Taskbar\TabbedThumbnail.cs" />
+    <Compile Include="Taskbar\TabbedThumbnailBitmapRequestedEventArgs.cs" />
+    <Compile Include="Taskbar\TabbedThumbnailClosedEventArgs.cs" />
+    <Compile Include="Taskbar\TabbedThumbnailEventArgs.cs" />
+    <Compile Include="Taskbar\TabbedThumbnailManager.cs" />
+    <Compile Include="Taskbar\TabbedThumbnailProxyWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Taskbar\TabbedThumbnailScreenCapture.cs" />
+    <Compile Include="Taskbar\TaskbarEnums.cs" />
+    <Compile Include="Taskbar\TaskbarInterfaces.cs" />
+    <Compile Include="Taskbar\TaskbarList.cs" />
+    <Compile Include="Taskbar\TaskbarManager.cs" />
+    <Compile Include="Taskbar\TaskbarWindow.cs" />
+    <Compile Include="Taskbar\TaskbarWindowManager.cs" />
+    <Compile Include="Taskbar\ThumbnailButton.cs" />
+    <Compile Include="Taskbar\ThumbnailButtonClickedEventArgs.cs" />
+    <Compile Include="Taskbar\ThumbnailToolbarManager.cs" />
+    <Compile Include="Taskbar\ThumbnailToolbarProxyWindow.cs" />
+    <Compile Include="Taskbar\UserRemovedJumpListItemsEventArg.cs" />
+    <Compile Include="ThumbnailProviders\ManagedInitializationInterfaces.cs" />
+    <Compile Include="ThumbnailProviders\ThumbnailProvider.cs" />
+    <Compile Include="ThumbnailProviders\ThumbnailProviderAttribute.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AppRestartRecovery" />
+    <Folder Include="Common" />
+    <Folder Include="CommonFileDialogs" />
+    <Folder Include="Controls" />
+    <Folder Include="Design" />
+    <Folder Include="DesktopWindowManager" />
+    <Folder Include="Dialogs" />
+    <Folder Include="ExplorerBrowser" />
+    <Folder Include="Interop" />
+    <Folder Include="Interop\Common" />
+    <Folder Include="Interop\Dialogs" />
+    <Folder Include="Interop\ExplorerBrowser" />
+    <Folder Include="Interop\KnownFolders" />
+    <Folder Include="Interop\PropertySystem" />
+    <Folder Include="Interop\ShellObjectWatcher" />
+    <Folder Include="Interop\StockIcons" />
+    <Folder Include="Interop\Taskbar" />
+    <Folder Include="KnownFolders" />
+    <Folder Include="Metadata" />
+    <Folder Include="NetworkList" />
+    <Folder Include="ExtendedLinguistics" />
+    <Folder Include="Resources" />
+    <Folder Include="ObjectModel" />
+    <Folder Include="PowerManagement" />
+    <Folder Include="PreviewHandlers" />
+    <Folder Include="PropertySystem" />
+    <Folder Include="SafeHandles" />
+    <Folder Include="Sensors" />
+    <Folder Include="ShellObjectWatcher" />
+    <Folder Include="StockIcons" />
+    <Folder Include="Taskbar" />
+    <Folder Include="ThumbnailProviders" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\CommandLinkWPF.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExplorerBrowser\ExplorerBrowser.WPF.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDictionary Include="CustomDictionary.xml">
+      <SubType>Designer</SubType>
+    </CodeAnalysisDictionary>
+    <None Include="Design\ShellObjects.cd" />
+    <None Include="Design\ShellThumbnailClassDiagram.cd" />
+    <None Include="ExplorerBrowser\ExplorerBrowserDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\LocalizedMessages.resx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+</Project>

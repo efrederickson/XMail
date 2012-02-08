@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{C26B3486-66CF-4040-9399-CA2EACBB9F16}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>XMail</RootNamespace>
+    <AssemblyName>XMail</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\AccountSettings.cs" />
+    <Compile Include="Classes\DefaultGmailSettings.cs" />
+    <Compile Include="Classes\Folder.cs" />
+    <Compile Include="Classes\Imap4Controller.cs" />
+    <Compile Include="Classes\MailMessage.cs" />
+    <Compile Include="Classes\MessageStore.cs" />
+    <Compile Include="Classes\Pop3Controller.cs" />
+    <Compile Include="Classes\Settings.cs" />
+    <Compile Include="Classes\SmtpController.cs" />
+    <Compile Include="Classes\StaticManager.cs" />
+    <Compile Include="Forms\AddAccountForm.cs" />
+    <Compile Include="Forms\AddAccountForm.Designer.cs">
+      <DependentUpon>AddAccountForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SplashScreen.cs" />
+    <Compile Include="Forms\SplashScreen.Designer.cs">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inbox.Designer.cs">
+      <DependentUpon>Inbox.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\WPFAssemblyInfo.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Serializer.cs" />
+    <Compile Include="Tasks\ITask.cs" />
+    <Compile Include="Tasks\LoadMessagesTask.cs" />
+    <Compile Include="Tasks\TaskManager.cs" />
+    <Compile Include="Tasks\UpdateEmailTask.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="MainWindow.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Images\Address.bmp" />
+    <None Include="Images\Archive.bmp" />
+    <None Include="Images\Calendar24.bmp" />
+    <None Include="Images\Contacts24.bmp" />
+    <None Include="Images\Copy.bmp" />
+    <None Include="Images\Cut.bmp" />
+    <None Include="Images\Delete.bmp" />
+    <None Include="Images\Drafts.bmp" />
+    <None Include="Images\Error.bmp" />
+    <None Include="Images\Find.bmp" />
+    <None Include="Images\Flag.bmp" />
+    <None Include="Images\Folder.bmp" />
+    <None Include="Images\Folder24.bmp" />
+    <None Include="Images\Forward.bmp" />
+    <None Include="Images\Help.bmp" />
+    <None Include="Images\Inbox.bmp" />
+    <None Include="Images\InternetFax.bmp" />
+    <None Include="Images\JournalEntry.bmp" />
+    <None Include="Images\Junk.bmp" />
+    <None Include="Images\Mail24.bmp" />
+    <None Include="Images\Move.bmp" />
+    <None Include="Images\New.bmp" />
+    <None Include="Images\New.png" />
+    <None Include="Images\NewAppointment.bmp" />
+    <None Include="Images\NewContact.bmp" />
+    <None Include="Images\NewDistributionList.bmp" />
+    <None Include="Images\NewFolder.bmp" />
+    <None Include="Images\NewMeetingRequest.bmp" />
+    <None Include="Images\NewSearchFolder.bmp" />
+    <None Include="Images\NewTask.bmp" />
+    <None Include="Images\Notes.bmp" />
+    <None Include="Images\Notes32.bmp" />
+    <None Include="Images\Outbox.bmp" />
+    <None Include="Images\OutlookToday.bmp" />
+    <None Include="Images\Paste.bmp" />
+    <None Include="Images\Post.bmp" />
+    <None Include="Images\Post.png" />
+    <None Include="Images\Print.bmp" />
+    <None Include="Images\PrintPreview.bmp" />
+    <None Include="Images\Read.bmp" />
+    <None Include="Images\Read.gif" />
+    <None Include="Images\Recycle.bmp" />
+    <None Include="Images\redo.ico" />
+    <None Include="Images\Reply.bmp" />
+    <None Include="Images\ReplyAll.bmp" />
+    <None Include="Images\Rule.bmp" />
+    <None Include="Images\save.gif" />
+    <None Include="Images\Search.bmp" />
+    <None Include="Images\Send.bmp" />
+    <None Include="Images\Sent.bmp" />
+    <None Include="Images\Shortcut.bmp" />
+    <None Include="Images\Shortcut24.bmp" />
+    <None Include="Images\SyncError.bmp" />
+    <None Include="Images\Task.bmp" />
+    <None Include="Images\TaskRequest.bmp" />
+    <None Include="Images\Tasks24.bmp" />
+    <None Include="Images\TitleBarGrip.bmp" />
+    <None Include="Images\undo.ico" />
+    <None Include="Images\Unread.gif" />
+    <None Include="Images\XMailSplashScreenImage.png" />
+    <None Include="Inbox.xsc">
+      <DependentUpon>Inbox.xsd</DependentUpon>
+    </None>
+    <EmbeddedResource Include="Inbox.xsd" />
+    <None Include="Inbox.xss">
+      <DependentUpon>Inbox.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Classes" />
+    <Folder Include="Forms" />
+    <Folder Include="Images" />
+    <Folder Include="Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\IExtendFramework\IExtendFramework\IExtendFramework.csproj">
+      <Project>{555B1E7D-E629-48A7-87A4-0AFBB69290FC}</Project>
+      <Name>IExtendFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MailSystem.NET\ActiveUp.Net.Common\ActiveUp.Net.Common.csproj">
+      <Project>{3A83AE95-C23F-48B4-9F1A-AD4B32C37B93}</Project>
+      <Name>ActiveUp.Net.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MailSystem.NET\ActiveUp.Net.Dns\ActiveUp.Net.Dns.csproj">
+      <Project>{A82CE4DD-9B08-439C-BC28-CB7B2BFFA85C}</Project>
+      <Name>ActiveUp.Net.Dns</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MailSystem.NET\ActiveUp.Net.Groupware\ActiveUp.Net.Groupware.csproj">
+      <Project>{C646ED2B-50B7-4178-BEFA-657F1259251F}</Project>
+      <Name>ActiveUp.Net.Groupware</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MailSystem.NET\ActiveUp.Net.Imap4\ActiveUp.Net.Imap4.csproj">
+      <Project>{6BEE77DF-2DD2-41C3-BA16-60E20B1EDDCC}</Project>
+      <Name>ActiveUp.Net.Imap4</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MailSystem.NET\ActiveUp.Net.Mail\ActiveUp.Net.Mail.csproj">
+      <Project>{2BD4C73E-C8DB-420E-9505-96D3F3BCA7B6}</Project>
+      <Name>ActiveUp.Net.Mail</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MailSystem.NET\ActiveUp.Net.Nntp\ActiveUp.Net.Nntp.csproj">
+      <Project>{FF4B354A-213B-415A-B8F7-582BAAFABC8C}</Project>
+      <Name>ActiveUp.Net.Nntp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MailSystem.NET\ActiveUp.Net.OpenPGP\ActiveUp.Net.OpenPGP.csproj">
+      <Project>{00CB8737-BA35-4775-AFA4-B8CD446AB83F}</Project>
+      <Name>ActiveUp.Net.OpenPGP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MailSystem.NET\ActiveUp.Net.Pop3\ActiveUp.Net.Pop3.csproj">
+      <Project>{3F01CF20-C49D-44A9-AA57-68F04915FE97}</Project>
+      <Name>ActiveUp.Net.Pop3</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MailSystem.NET\ActiveUp.Net.Smtp\ActiveUp.Net.Smtp.csproj">
+      <Project>{D9BCD15E-A438-4554-89D3-1CF122167FDD}</Project>
+      <Name>ActiveUp.Net.Smtp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MailSystem.NET\ActiveUp.Net.WhoIs\ActiveUp.Net.WhoIs.csproj">
+      <Project>{1E4D8E5B-D422-47DC-9CF3-B8E88A4472AF}</Project>
+      <Name>ActiveUp.Net.WhoIs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MailSystem.NET\ActiveUp.Net\ActiveUp.Net.csproj">
+      <Project>{25DA9502-B959-4E81-9368-471AE231BCC0}</Project>
+      <Name>ActiveUp.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WindowsAPICodePack\WindowsAPICodePack.csproj">
+      <Project>{ED235059-C297-499E-B48E-632D1C68F5AE}</Project>
+      <Name>WindowsAPICodePack</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\AddAccountForm.resx">
+      <DependentUpon>AddAccountForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SplashScreen.resx">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+</Project>
