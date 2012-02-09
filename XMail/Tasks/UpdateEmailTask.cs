@@ -7,7 +7,9 @@ using System;
 using System.IO;
 using ActiveUp.Net.Mail;
 using IExtendFramework;
+using IExtendFramework.Controls;
 using IExtendFramework.Controls.AdvancedMessageBox;
+using IExtendFramework.Threading;
 using XMail.Classes;
 
 namespace XMail.Tasks
@@ -27,7 +29,7 @@ namespace XMail.Tasks
         
         public string Text {
             get {
-                return "Fetching email... {0} of {1}".ToFormattedString(current, emailCount);
+                return "Fetching email... {0} of {1}".ToFormattedString(current > emailCount ? emailCount : current, emailCount);
             }
         }
         
@@ -52,10 +54,24 @@ namespace XMail.Tasks
                                 Message m = StaticManager.GetMessage(current, false);
                                 
                                 // if it exists, ignore it.
-                                if (!File.Exists(System.Windows.Forms.Application.LocalUserAppDataPath + "\\..\\Messages\\" + GetAPath(m, System.Windows.Forms.Application.LocalUserAppDataPath + "\\..\\Messages\\") + ".xsm"))
+                                if (File.Exists(System.Windows.Forms.Application.LocalUserAppDataPath + "\\..\\Messages\\" + GetAPath(m) + ".xsm")
+                                    || StaticManager.Messages.Contains(m))
                                 {
-                                    Serializer.Serialize(m, System.Windows.Forms.Application.LocalUserAppDataPath + "\\..\\Messages\\" + GetAPath(m, System.Windows.Forms.Application.LocalUserAppDataPath + "\\..\\Messages\\") + ".xsm");
+                                    // skip it.
+                                }
+                                else
+                                {
+                                    Serializer.Serialize(m, System.Windows.Forms.Application.LocalUserAppDataPath + "\\..\\Messages\\" + GetAPath(m) + ".xsm");
                                     StaticManager.Messages.Add(m);
+                                    MainWindow.Instance.NotifyIcon.ShowBalloonTip(1000,
+                                                                                  "New email!",
+                                                                                  "Subject: " + m.Subject + "\n" +
+                                                                                  "Recived: " + m.ReceivedDate.ToString()
+                                                                                  , System.Windows.Forms.ToolTipIcon.None);
+                                    
+                                    //if (StaticManager.IsPop3)
+                                    //    StaticManager.Pop3.Pop3Client.DeleteMessage
+                                    //TODO: mark as read
                                 }
                             }
                         }
@@ -80,20 +96,20 @@ namespace XMail.Tasks
         
         public void Stop()
         {
-            try 
+            try
             {
                 t.Stop();
-            } 
-            catch (Exception) 
+            }
+            catch (Exception)
             {
                 // ignore, probly is done updating
             }
             
         }
         
-        string GetAPath(Message m, string origin)
+        internal static string GetAPath(Message m)
         {
-            string o = m.Subject + "." + m.MessageId;
+            string o = m.Subject + "." + m.IndexOnServer;
             foreach (char c in Path.GetInvalidFileNameChars())
                 o = o.Replace(c, '_');
             foreach (char c in Path.GetInvalidPathChars())

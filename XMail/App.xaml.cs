@@ -9,7 +9,7 @@ using XMail.Classes;
 namespace XMail
 {
     /// <summary>
-    /// Interaction logic for App.xaml
+    /// The startup class
     /// </summary>
     internal partial class App : Application
     {
@@ -41,14 +41,16 @@ namespace XMail
             }
             StaticManager.Connect();
             splash.SetMessage("Creating user interface...");
-            MainWindow a = new MainWindow();
+            MainWindow a = XMail.MainWindow.Instance;
             splash.Close();
-            a.ShowDialog();
-            Tasks.TaskManager.StopAll();
+            
             try{ // ugh. TODO: remove this requirement
-            StaticManager.Disconnect();
+                a.ShowDialog();
+                Tasks.TaskManager.StopAll();
+                StaticManager.Disconnect();
             }catch(Exception){}
             Settings.Save();
+            XMail.MainWindow.Instance.NotifyIcon.Dispose();
         }
 
         void AppDomain_CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)

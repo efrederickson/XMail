@@ -15,9 +15,26 @@ namespace XMail.Classes
     /// </summary>
     public static class StaticManager
     {
+        static System.Windows.Forms.Timer t = new System.Windows.Forms.Timer();
+        static StaticManager()
+        {
+            t.Interval = 15000;
+            t.Enabled = true;
+            t.Tick += delegate { Disconnect(); Connect(); };
+            t.Start();
+        }
+        
         public static List<Message> Messages = new List<Message>();
-        private static Pop3Controller _pop3controller = null;
-        private static Imap4Controller _imap4controller = null;
+        public static Pop3Controller Pop3 = null;
+        public static Imap4Controller Imap4 = null;
+        
+        public static bool IsPop3
+        {
+            get 
+            {
+                return Pop3 != null;
+            }
+        }
         
         // connects with default settings
         public static void Connect()
@@ -25,10 +42,10 @@ namespace XMail.Classes
             AccountSettings.AccountInfo ai = Settings.Account.Accounts[0];
             switch (ai.MailAccountType) {
                 case AccountType.POP3:
-                    _pop3controller = new Pop3Controller(ai);
+                    Pop3 = new Pop3Controller(ai);
                     break;
                 case AccountType.IMAP:
-                    _imap4controller = new Imap4Controller(ai);
+                    Imap4 = new Imap4Controller(ai);
                     break;
                 default:
                     throw new Exception("Invalid value for AccountType");
@@ -37,19 +54,19 @@ namespace XMail.Classes
         
         public static void Disconnect()
         {
-            if (_pop3controller != null)
+            if (Pop3 != null)
             {
-                _pop3controller.Disconnect();
+                Pop3.Disconnect();
             }
-            if (_imap4controller != null)
-                _imap4controller.Disconnect();
+            if (Imap4 != null)
+                Imap4.Disconnect();
         }
         
         public static Message GetMessage(int index, bool delete = false)
         {
-            if (_pop3controller != null)
+            if (Pop3 != null)
             {
-                return _pop3controller.Pop3Client.RetrieveMessageObject(index, delete);
+                return Pop3.Pop3Client.RetrieveMessageObject(index, delete);
             }
             else // use Imap4
             {
@@ -61,12 +78,12 @@ namespace XMail.Classes
         
         public static List<Message> GetAllMessages()
         {
-            if (_pop3controller != null)
+            if (Pop3 != null)
             {
                 List<Message> msgs = new List<Message>();
-                for (int i = 1; i <= _pop3controller.Pop3Client.MessageCount; i++)
+                for (int i = 1; i <= Pop3.Pop3Client.MessageCount; i++)
                 {
-                    msgs.Add(_pop3controller.Pop3Client.RetrieveMessageObject(i));
+                    msgs.Add(Pop3.Pop3Client.RetrieveMessageObject(i));
                 }
                 return msgs;
             }
@@ -80,8 +97,8 @@ namespace XMail.Classes
         
         public static int GetMessageCount()
         {
-            if (_pop3controller != null)
-                return _pop3controller.Pop3Client.MessageCount;
+            if (Pop3 != null)
+                return Pop3.Pop3Client.MessageCount;
             //else
             //TODO
             return 0;

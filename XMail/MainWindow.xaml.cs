@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,28 +19,49 @@ using ActiveUp.Net.Mail;
 using IExtendFramework.Controls.AdvancedMessageBox;
 using XMail.Classes;
 using XMail.Tasks;
+using IExtendFramework;
 
 namespace XMail
 {
-    public delegate void InvokeItemDelegate();
-    
     /// <summary>
     /// The main window
     /// </summary>
     public partial class MainWindow : Window
     {
-        System.Windows.Forms.Timer t;
+        private static MainWindow _instance = null;
+        public static MainWindow Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new MainWindow();
+                return _instance;
+            }
+        }
         
-        public MainWindow()
+        public System.Windows.Forms.NotifyIcon NotifyIcon = new System.Windows.Forms.NotifyIcon();
+        
+        System.Windows.Forms.Timer updateUITimer;
+        // email task starter
+        System.Windows.Forms.Timer checkEmailTimer = new System.Windows.Forms.Timer();
+        
+        private MainWindow()
         {
             InitializeComponent();
             
+            checkEmailTimer.Interval = 30000;
+            checkEmailTimer.Tick += delegate { TaskManager.AddTask(new UpdateEmailTask()); };
+            checkEmailTimer.Enabled = true;
             
-            t = new System.Windows.Forms.Timer();
-            t.Tick += new EventHandler(t_Tick);
-            t.Enabled = true;
-            t.Interval = 100;
-            t.Start();
+            NotifyIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location);
+            NotifyIcon.Text = "X Mail - {0} Unread emails".ToFormattedString(0);
+            NotifyIcon.BalloonTipTitle = "X Mail";
+            NotifyIcon.Visible = true;
+            
+            updateUITimer = new System.Windows.Forms.Timer();
+            updateUITimer.Tick += new EventHandler(t_Tick);
+            updateUITimer.Enabled = true;
+            updateUITimer.Interval = 100;
             
             BackgroundWorker bg = new BackgroundWorker();
             bg.WorkerReportsProgress = true;
@@ -58,12 +80,12 @@ namespace XMail
                             //for(int i = 0; i < messagesListBox.Items.Count; i++)//each (ListBoxItem i in messagesListBox.Items)
                             //    if (((messagesListBox.Items[i] as ListBoxItem).Tag as ActiveUp.Net.Mail.Message) == m)
                             bool c = false;
-                            this.Dispatcher.Invoke(new InvokeItemDelegate(delegate
-                                                                          {
-                                                                              foreach (ListBoxItem i in messagesListBox.Items)
-                                                                                  if ((i.Tag as Message) == m)
-                                                                                      c = true;
-                                                                          }));
+                            this.Dispatcher.Invoke(new WpfInvokeControlDelegate(delegate
+                                                                                {
+                                                                                    foreach (ListBoxItem i in messagesListBox.Items)
+                                                                                        if ((i.Tag as Message) == m)
+                                                                                            c = true;
+                                                                                }));
                             if (c)
                                 continue; // its already there
                             // add it...
@@ -86,14 +108,14 @@ namespace XMail
                     if (e.ProgressPercentage == -1)
                     {
                         Message m = e.UserState as Message;
-                        messagesListBox.Dispatcher.Invoke(new InvokeItemDelegate(delegate
-                                                                                 {
-                                                                                     messagesListBox.Items.Add(new ListBoxItem()
-                                                                                                               {
-                                                                                                                   Content = m.Subject,
-                                                                                                                   Tag = m
-                                                                                                               });
-                                                                                 }));
+                        messagesListBox.Dispatcher.Invoke(new WpfInvokeControlDelegate(delegate
+                                                                                       {
+                                                                                           messagesListBox.Items.Add(new ListBoxItem()
+                                                                                                                     {
+                                                                                                                         Content = m.Subject,
+                                                                                                                         Tag = m
+                                                                                                                     });
+                                                                                       }));
                     }
                 }
                 catch (Exception ex)
@@ -101,10 +123,14 @@ namespace XMail
                     MessageBox.Show(ex.ToString());
                 }
             };
+            
+            updateUITimer.Start();
+            checkEmailTimer.Start();
             bg.RunWorkerAsync();
             
             // load all saved messages
             TaskManager.AddTask(new LoadMessagesTask());
+            TaskManager.AddTask(new UpdateEmailTask());
         }
         
         bool goingUp = true;
@@ -149,10 +175,13 @@ namespace XMail
             {
                 string s = ((messagesListBox.SelectedItem as ListBoxItem).Tag as Message).BodyHtml.Text;
                 string s2 = ((messagesListBox.SelectedItem as ListBoxItem).Tag as Message).BodyText.Text;
-                if (s != null)
+                if (!string.IsNullOrEmpty(s))
                     messageViewer.NavigateToString(s);
-                else if (s2 != null)
+                else if (!string.IsNullOrEmpty(s2))
+                {
+                    s2 = s2.Replace("\n", "<br />");
                     messageViewer.NavigateToString("<html><body>" + s2 + "</body></html>");
+                }
                 else
                     messageViewer.NavigateToString("<html><body><h2>This message has no text</body></html>");
                 
@@ -171,6 +200,33 @@ ERROR: <br />" + ex.ToString().Replace("\n", "<br />")
         void Window_Closing(object sender, CancelEventArgs e)
         {
             Tasks.TaskManager.StopAll();
+        }
+        
+        void MessagesListBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete)
+            {
+                if (StaticManager.IsPop3)
+                {
+                    try
+                    {
+                        Message m = ((messagesListBox.SelectedItem as ListBoxItem).Tag as Message);
+                        StaticManager.Pop3.Pop3Client.DeleteMessage(messagesListBox.SelectedIndex + 1);
+                        StaticManager.Messages.RemoveAt(messagesListBox.SelectedIndex);
+                        File.Delete(System.Windows.Forms.Application.LocalUserAppDataPath + "\\..\\Messages\\" + UpdateEmailTask.GetAPath(m));
+                    }
+                    catch (Exception ex)
+                    {
+                        TaskDialog.Show(new TaskDialogOptions()
+                                        {
+                                            Title = "Error deleting message!",
+                                            Content = "Error: " + ex.Message,
+                                            ExpandedInfo = "Full Error: " + ex.ToString()
+                                        });
+                    }
+                    
+                }
+            }
         }
         
     }
