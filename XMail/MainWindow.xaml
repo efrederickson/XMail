@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Window
     x:Class="XMail.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="XMail"
@@ -18,7 +18,7 @@
                 Header="File">
                 <MenuItem
                     Header="New Email..."
-                    Click="sendEmail_Click"/>
+                    Click="sendEmail_Click" />
             </MenuItem>
             <MenuItem
                 Header="Edit" />
@@ -27,22 +27,16 @@
                 <MenuItem
                     Header="Check for email"
                     Click="MenuItem_Click" />
+                <MenuItem
+                    Header="Options"
+                    Name="menuItem1"
+                    Click="menuItem1_Click" />
+                <MenuItem 
+                    Header="Set up new email account"
+                    Click="MenuItem_Click_1"
+                    />
             </MenuItem>
         </Menu>
-        <ListBox
-            ScrollViewer.CanContentScroll="True"
-            ScrollViewer.HorizontalScrollBarVisibility="Visible"
-            ScrollViewer.VerticalScrollBarVisibility="Visible"
-            SelectionChanged="MessagesListBox_SelectionChanged"
-            Name="messagesListBox"
-            Grid.Column="0"
-            Grid.Row="0"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch"
-            Margin="186,41,303,53"
-            Width="419"
-            KeyUp="MessagesListBox_KeyUp"
-            Height="343" />
         <TreeView
             SelectedItemChanged="mailboxesTreeView_SelectedItemChanged"
             Name="mailboxesTreeView"
@@ -55,13 +49,14 @@
             Height="343">
             <TreeViewItem
                 Header="Inbox"
-                Name="inboxTreeViewItem"
-                >
+                Name="inboxTreeViewItem">
                 <TreeViewItem
                     Name="unreadTreeViewItem"
                     Header="Unread" />
             </TreeViewItem>
-            <TreeViewItem Header="Sent" Name="sentTreeViewItem"></TreeViewItem>
+            <TreeViewItem
+                Header="Sent"
+                Name="sentTreeViewItem"></TreeViewItem>
         </TreeView>
         <Label
             Content="Task... Step 0 of 999"
@@ -83,11 +78,13 @@
             VerticalScrollBarVisibility="Hidden"
             Width="286"
             Height="343">
-                    <WebBrowser
+            <WebBrowser
                 ScrollViewer.CanContentScroll="True"
                 ScrollViewer.VerticalScrollBarVisibility="Hidden"
                 ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                Name="messageViewer" /></ScrollViewer>
+                Name="messageViewer" />
+        </ScrollViewer>
+        <WindowsFormsHost Height="343" HorizontalAlignment="Left" Margin="183,41,0,0" Name="windowsFormsHost1" VerticalAlignment="Top" Width="413" />
         <Grid.ColumnDefinitions></Grid.ColumnDefinitions>
     </Grid>
 </Window>

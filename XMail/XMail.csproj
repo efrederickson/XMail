@@ -59,6 +59,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>XMail.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AxInterop.SHDocVw">
       <HintPath>..\lib\AxInterop.SHDocVw.dll</HintPath>
@@ -109,7 +112,6 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\AccountSettings.cs" />
-    <Compile Include="Classes\DefaultGmailSettings.cs" />
     <Compile Include="Classes\Folder.cs" />
     <Compile Include="Classes\Imap4Controller.cs" />
     <Compile Include="Classes\InboxType.cs" />
@@ -127,6 +129,10 @@
     </Compile>
     <Compile Include="Forms\NewEmailForm.xaml.cs">
       <DependentUpon>NewEmailForm.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Forms\OptionsWindow.xaml.cs">
+      <DependentUpon>OptionsWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Forms\SplashScreen.cs">
@@ -159,6 +165,7 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Forms\NewEmailForm.xaml" />
+    <Page Include="Forms\OptionsWindow.xaml" />
     <Page Include="MainWindow.xaml" />
   </ItemGroup>
   <ItemGroup>
@@ -435,6 +442,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\XMail.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="XMail.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <PropertyGroup>

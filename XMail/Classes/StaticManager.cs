@@ -20,7 +20,11 @@ namespace XMail.Classes
         {
             t.Interval = 15000;
             t.Enabled = true;
-            t.Tick += delegate { Disconnect(); Connect(); };
+            t.Tick += delegate {
+                if (Tasks.TaskManager.Contains(typeof(Tasks.UpdateEmailTask)))
+                    return;
+                Disconnect(); Connect(); 
+            };
             t.Start();
         }
         

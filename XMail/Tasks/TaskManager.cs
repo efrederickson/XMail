@@ -64,5 +64,14 @@ namespace XMail.Tasks
                 return Tasks.Count;
             }
         }
+
+        public static bool Contains(Type t)
+        {
+            foreach (object o in Tasks)
+                if (o.GetType() == t)
+                    return true;
+
+            return false;
+        }
     }
 }

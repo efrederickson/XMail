@@ -33,15 +33,14 @@
             this.btnNext = new System.Windows.Forms.Button();
             this.btnBack = new System.Windows.Forms.Button();
             this.panelScreen1 = new System.Windows.Forms.Panel();
-            this.chkManualConfiguration = new System.Windows.Forms.CheckBox();
+            this.detectedProviderLabel = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.chkRememberPassword = new System.Windows.Forms.CheckBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label3 = new System.Windows.Forms.Label();
             this.txtEmailAddress = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -79,16 +78,15 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Location = new System.Drawing.Point(13, 292);
+            this.groupBox1.Location = new System.Drawing.Point(13, 284);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(460, 2);
+            this.groupBox1.Size = new System.Drawing.Size(551, 10);
             this.groupBox1.TabIndex = 13;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(397, 305);
+            this.btnCancel.Location = new System.Drawing.Point(480, 305);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 14;
@@ -98,7 +96,7 @@
             // 
             // btnNext
             // 
-            this.btnNext.Location = new System.Drawing.Point(316, 305);
+            this.btnNext.Location = new System.Drawing.Point(399, 305);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(75, 23);
             this.btnNext.TabIndex = 15;
@@ -118,33 +116,41 @@
             // 
             // panelScreen1
             // 
-            this.panelScreen1.Controls.Add(this.chkManualConfiguration);
+            this.panelScreen1.Controls.Add(this.detectedProviderLabel);
+            this.panelScreen1.Controls.Add(this.checkBox1);
             this.panelScreen1.Controls.Add(this.label7);
             this.panelScreen1.Controls.Add(this.txtName);
             this.panelScreen1.Controls.Add(this.label6);
             this.panelScreen1.Controls.Add(this.label5);
-            this.panelScreen1.Controls.Add(this.chkRememberPassword);
             this.panelScreen1.Controls.Add(this.txtPassword);
             this.panelScreen1.Controls.Add(this.label4);
-            this.panelScreen1.Controls.Add(this.linkLabel1);
             this.panelScreen1.Controls.Add(this.label3);
             this.panelScreen1.Controls.Add(this.txtEmailAddress);
             this.panelScreen1.Controls.Add(this.label2);
             this.panelScreen1.Controls.Add(this.label1);
             this.panelScreen1.Location = new System.Drawing.Point(35, 12);
             this.panelScreen1.Name = "panelScreen1";
-            this.panelScreen1.Size = new System.Drawing.Size(383, 274);
+            this.panelScreen1.Size = new System.Drawing.Size(520, 274);
             this.panelScreen1.TabIndex = 17;
             // 
-            // chkManualConfiguration
+            // detectedProviderLabel
             // 
-            this.chkManualConfiguration.AutoSize = true;
-            this.chkManualConfiguration.Location = new System.Drawing.Point(27, 253);
-            this.chkManualConfiguration.Name = "chkManualConfiguration";
-            this.chkManualConfiguration.Size = new System.Drawing.Size(283, 17);
-            this.chkManualConfiguration.TabIndex = 25;
-            this.chkManualConfiguration.Text = "Manually &configure the server settings for this account.";
-            this.chkManualConfiguration.UseVisualStyleBackColor = true;
+            this.detectedProviderLabel.AutoSize = true;
+            this.detectedProviderLabel.Location = new System.Drawing.Point(362, 32);
+            this.detectedProviderLabel.Name = "detectedProviderLabel";
+            this.detectedProviderLabel.Size = new System.Drawing.Size(0, 13);
+            this.detectedProviderLabel.TabIndex = 26;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(110, 109);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(102, 17);
+            this.checkBox1.TabIndex = 25;
+            this.checkBox1.Text = "Show Password";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // label7
             // 
@@ -180,16 +186,6 @@
             this.label5.TabIndex = 21;
             this.label5.Text = "How should your name appear on the emails sent from this account?";
             // 
-            // chkRememberPassword
-            // 
-            this.chkRememberPassword.AutoSize = true;
-            this.chkRememberPassword.Location = new System.Drawing.Point(113, 110);
-            this.chkRememberPassword.Name = "chkRememberPassword";
-            this.chkRememberPassword.Size = new System.Drawing.Size(125, 17);
-            this.chkRememberPassword.TabIndex = 20;
-            this.chkRememberPassword.Text = "Remember password";
-            this.chkRememberPassword.UseVisualStyleBackColor = true;
-            // 
             // txtPassword
             // 
             this.txtPassword.Location = new System.Drawing.Point(110, 83);
@@ -208,17 +204,6 @@
             this.label4.TabIndex = 18;
             this.label4.Text = "Password:";
             // 
-            // linkLabel1
-            // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(222, 53);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(123, 13);
-            this.linkLabel1.TabIndex = 17;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "Get a free email account";
-            this.linkLabel1.Visible = false;
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -234,6 +219,7 @@
             this.txtEmailAddress.Name = "txtEmailAddress";
             this.txtEmailAddress.Size = new System.Drawing.Size(248, 20);
             this.txtEmailAddress.TabIndex = 15;
+            this.txtEmailAddress.TextChanged += new System.EventHandler(this.txtEmailAddress_TextChanged);
             // 
             // label2
             // 
@@ -257,9 +243,9 @@
             // 
             this.panelScreen2.Controls.Add(this.groupBox3);
             this.panelScreen2.Controls.Add(this.groupBox2);
-            this.panelScreen2.Location = new System.Drawing.Point(35, 12);
+            this.panelScreen2.Location = new System.Drawing.Point(35, 4);
             this.panelScreen2.Name = "panelScreen2";
-            this.panelScreen2.Size = new System.Drawing.Size(383, 274);
+            this.panelScreen2.Size = new System.Drawing.Size(520, 274);
             this.panelScreen2.TabIndex = 18;
             // 
             // groupBox3
@@ -448,8 +434,8 @@
             this.ddlServerType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ddlServerType.FormattingEnabled = true;
             this.ddlServerType.Items.AddRange(new object[] {
-                                    "POP3",
-                                    "IMAP"});
+            "POP3",
+            "IMAP"});
             this.ddlServerType.Location = new System.Drawing.Point(171, 25);
             this.ddlServerType.Name = "ddlServerType";
             this.ddlServerType.Size = new System.Drawing.Size(78, 21);
@@ -468,9 +454,9 @@
             // 
             this.panelScreen3.Controls.Add(this.progressBar);
             this.panelScreen3.Controls.Add(this.labelStatus);
-            this.panelScreen3.Location = new System.Drawing.Point(35, 11);
+            this.panelScreen3.Location = new System.Drawing.Point(26, 10);
             this.panelScreen3.Name = "panelScreen3";
-            this.panelScreen3.Size = new System.Drawing.Size(383, 273);
+            this.panelScreen3.Size = new System.Drawing.Size(529, 273);
             this.panelScreen3.TabIndex = 12;
             // 
             // progressBar
@@ -493,10 +479,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(488, 340);
+            this.ClientSize = new System.Drawing.Size(567, 342);
             this.Controls.Add(this.panelScreen3);
-            this.Controls.Add(this.panelScreen2);
             this.Controls.Add(this.panelScreen1);
+            this.Controls.Add(this.panelScreen2);
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.btnNext);
             this.Controls.Add(this.btnCancel);
@@ -518,8 +504,8 @@
             this.groupBox2.PerformLayout();
             this.panelScreen3.ResumeLayout(false);
             this.ResumeLayout(false);
-        }
 
+        }
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
@@ -527,15 +513,12 @@
         private System.Windows.Forms.Button btnNext;
         private System.Windows.Forms.Button btnBack;
         private System.Windows.Forms.Panel panelScreen1;
-        private System.Windows.Forms.CheckBox chkManualConfiguration;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.CheckBox chkRememberPassword;
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtEmailAddress;
         private System.Windows.Forms.Label label2;
@@ -564,5 +547,7 @@
         private System.Windows.Forms.CheckBox chkOutPort;
         private System.Windows.Forms.CheckBox chkInPort;
         private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label detectedProviderLabel;
     }
 }

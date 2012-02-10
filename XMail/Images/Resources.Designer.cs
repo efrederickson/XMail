@@ -473,6 +473,13 @@ namespace XMail.Images {
             }
         }
         
+        internal static System.Drawing.Icon XMail {
+            get {
+                object obj = ResourceManager.GetObject("XMail", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap XMailSplashScreenImage {
             get {
                 object obj = ResourceManager.GetObject("XMailSplashScreenImage", resourceCulture);

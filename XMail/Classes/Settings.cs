@@ -15,6 +15,8 @@ namespace XMail.Classes
     /// </summary>
     public class Settings
     {
+        // 30 seconds
+        public static int WaitToCheckForEmailSeconds = -1;
         public static List<string> Emails = new List<string>();
 
         public static AccountSettings Account = null;
@@ -27,6 +29,16 @@ namespace XMail.Classes
                 Directory.CreateDirectory(baseAccountPath);
             
             Account = AccountSettings.Load(baseAccountPath + "\\Accounts.xusr");
+
+            IExtendFramework.Text.INIDocument doc = null;
+            if (!File.Exists(baseAccountPath + "\\..\\Settings.ini"))
+            {
+                doc = new IExtendFramework.Text.INIDocument();
+                doc["general"]["WaitToCheckForEmailSeconds"] = 30000.ToString();
+                doc.Save(baseAccountPath + "\\..\\Settings.ini");
+            }
+            doc = new IExtendFramework.Text.INIDocument(baseAccountPath + "\\..\\Settings.ini");
+            WaitToCheckForEmailSeconds = doc.GetInt32("general", "WaitToCheckForEmailSeconds");
 
             string base2 = baseAccountPath + "\\..\\Emails.list"; // up one folder
             if (!File.Exists(base2))
@@ -50,6 +62,10 @@ namespace XMail.Classes
             foreach (string email in Emails)
                 sw.WriteLine(email);
             sw.Close();
+
+            IExtendFramework.Text.INIDocument doc = new IExtendFramework.Text.INIDocument();
+            doc["general"]["WaitToCheckForEmailSeconds"] = WaitToCheckForEmailSeconds.ToString();
+            doc.Save(baseAccountPath + "\\..\\Settings.ini");
         }
     }
 }

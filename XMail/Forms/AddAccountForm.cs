@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using ActiveUp.Net.Mail;
 using IExtendFramework.Controls.AdvancedMessageBox;
+using IExtendFramework;
 
 namespace XMail.Forms
 {
@@ -52,7 +53,6 @@ namespace XMail.Forms
             this.txtEmailAddress.Text = this._accInfo.EmailAddress;
             this.txtPassword.Text = this._accInfo.Password;
             this.txtName.Text = this._accInfo.UserName;
-            this.chkRememberPassword.Checked = this._accInfo.RememberPassword;
             this.ddlServerType.Text = this._accInfo.MailAccountType.ToString();
             this.txtIncomingServer.Text = this._accInfo.IncomingServerName;
             this.txtIncomingPortNumber.Text = this._accInfo.InPort.ToString();
@@ -176,7 +176,7 @@ namespace XMail.Forms
                             
                             _accInfo.EmailAddress = txtEmailAddress.Text;
                             _accInfo.Password = txtPassword.Text;
-                            _accInfo.RememberPassword = chkRememberPassword.Checked;
+                            _accInfo.RememberPassword = true;
                             _accInfo.UserName = txtName.Text;
                             
                             if (_accInfo.EmailAddress.ToLower().EndsWith("gmail.com"))
@@ -190,6 +190,30 @@ namespace XMail.Forms
                                 ddlServerType.SelectedIndex = 0;
                                 chkOutgoingNeedsAuth.Checked = true;
                                 chkOutgoingNeedsSSL.Checked = true;
+                            }
+                            else if (_accInfo.EmailAddress.ToLower().EndsWith("hotmail.com"))
+                            {
+                                chkSSL.Checked = true;
+                                txtIncomingPortNumber.Text = "995";
+                                txtIncomingServer.Text = "pop3.live.com";
+                                txtOutgoingPort.Text = "587";
+                                txtOutgoingServer.Text = "smtp.live.com";
+                                ddlAuthenticationType.SelectedIndex = 1;
+                                ddlServerType.SelectedIndex = 0;
+                                chkOutgoingNeedsAuth.Checked = true;
+                                chkOutgoingNeedsSSL.Checked = true;
+                            }
+                            else if (_accInfo.EmailAddress.ToLower().EndsWith("aol.com"))
+                            {
+                                chkSSL.Checked = true;
+                                txtIncomingPortNumber.Text = "995";
+                                txtIncomingServer.Text = "pop.aol.com";
+                                txtOutgoingPort.Text = "587";
+                                txtOutgoingServer.Text = "smtp.aol.com";
+                                ddlAuthenticationType.SelectedIndex = 1;
+                                ddlServerType.SelectedIndex = 0;
+                                chkOutgoingNeedsAuth.Checked = true;
+                                //chkOutgoingNeedsSSL.Checked = true;
                             }
                             
                             panelScreen1.Visible = false;
@@ -285,7 +309,7 @@ namespace XMail.Forms
             catch (Exception)
             {
                 success = false;
-                msg = "The incoming server email configuration is not valid.\nPlease make sure that you have a stable internet connection,\nand have entered the correct information.";
+                msg = "The incoming server email configuration is not valid.\nPlease make sure that you have a stable internet connection,\nand have entered the correct username and password.";
             }
 
             // verify outcoming server email configurations.
@@ -344,8 +368,7 @@ namespace XMail.Forms
             // screen 1.
             if (m_CurrStep == Step.Screen1)
             {
-                if (this.txtEmailAddress.Text.Trim().Equals(string.Empty) ||
-                    !this.txtEmailAddress.Text.Contains("@"))
+                if (this.txtEmailAddress.Text.IsEmail() == false)
                 {
                     msgError = "Enter a valid email address.";
                 }
@@ -433,10 +456,14 @@ namespace XMail.Forms
         private void AddAccountWizardForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (m_bFinish)
+            {
+                DialogResult = System.Windows.Forms.DialogResult.OK;
                 return;
+            }
 
             if (_close)
             {
+                DialogResult = System.Windows.Forms.DialogResult.OK;
                 return;
             }
             
@@ -473,6 +500,44 @@ namespace XMail.Forms
         private void chkOutPort_CheckedChanged(object sender, EventArgs e)
         {
             this.txtOutgoingPort.Enabled = this.chkOutPort.Checked;
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked)
+            {
+                txtPassword.PasswordChar = '\0';
+                txtPassword.UseSystemPasswordChar = false;
+            }
+            else
+            {
+                txtPassword.PasswordChar = '*';
+                txtPassword.UseSystemPasswordChar = true;
+            }
+        }
+
+        void txtEmailAddress_TextChanged(object sender, System.EventArgs e)
+        {
+            if (txtEmailAddress.Text.IsEmail() == false)
+            {
+                detectedProviderLabel.Text = "Not a valid email!";
+            }
+            else if (txtEmailAddress.Text.ToLower().EndsWith("gmail.com"))
+            {
+                detectedProviderLabel.Text = "Detected provider: gmail";
+            }
+            else if (txtEmailAddress.Text.ToLower().EndsWith("hotmail.com"))
+            {
+                detectedProviderLabel.Text = "Detected provider: hotmail";
+            }
+            else if (txtEmailAddress.Text.ToLower().EndsWith("aol.com"))
+            {
+                detectedProviderLabel.Text = "Detected provider: aol";
+            }
+            else
+            {
+                detectedProviderLabel.Text = "Unknown email provider";
+            }
         }
 
     }

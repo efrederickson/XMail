@@ -325,17 +325,17 @@ namespace XMail
 
         public int IndexOf(AccountSettings.AccountInfo item)
         {
-            throw new NotImplementedException();
+            return m_aAccInfoList.IndexOf(item);
         }
 
         public void Insert(int index, AccountSettings.AccountInfo item)
         {
-            throw new NotImplementedException();
+            this.m_aAccInfoList.Insert(index, item);
         }
 
         public void RemoveAt(int index)
         {
-            throw new NotImplementedException();
+            this.m_aAccInfoList.RemoveAt(index);
         }
 
         public AccountSettings.AccountInfo this[int index]

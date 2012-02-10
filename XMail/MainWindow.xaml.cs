@@ -20,6 +20,7 @@ using IExtendFramework.Controls.AdvancedMessageBox;
 using XMail.Classes;
 using XMail.Tasks;
 using IExtendFramework;
+using System.Windows.Media.Imaging;
 
 namespace XMail
 {
@@ -28,6 +29,8 @@ namespace XMail
     /// </summary>
     public partial class MainWindow : Window
     {
+        System.Windows.Forms.ListView messagesListView = new System.Windows.Forms.ListView();
+
         private static MainWindow _instance = null;
         /// <summary>
         /// singleton pattern for this
@@ -50,14 +53,22 @@ namespace XMail
         
         private MainWindow()
         {
+
             InitializeComponent();
-            
+            this.Icon = BitmapFrame.Create(new Uri(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\Images\\XMail.ico", UriKind.RelativeOrAbsolute));
+
+            windowsFormsHost1.Child = messagesListView;
+            messagesListView.Columns.Add("Subject");
+            messagesListView.Columns.Add("Date");
+            messagesListView.View = System.Windows.Forms.View.Details;
+            messagesListView.SelectedIndexChanged += MessagesListBox_SelectionChanged;
+
             sentTreeViewItem.Tag = InboxType.Sent;
             unreadTreeViewItem.Tag = InboxType.Unread;
             inboxTreeViewItem.Tag = InboxType.Inbox;
 
-            checkEmailTimer.Interval = 30000;
-            checkEmailTimer.Tick += delegate { TaskManager.AddTask(new UpdateEmailTask()); };
+            checkEmailTimer.Interval = Settings.WaitToCheckForEmailSeconds;
+            checkEmailTimer.Tick += delegate { TaskManager.AddTask(new UpdateEmailTask()); checkEmailTimer.Interval = Settings.WaitToCheckForEmailSeconds; };
             checkEmailTimer.Enabled = true;
             
             NotifyIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location);
@@ -85,12 +96,10 @@ namespace XMail
                             {
 
                                 // if the message isn't see-able...
-                                //for(int i = 0; i < messagesListBox.Items.Count; i++)//each (ListBoxItem i in messagesListBox.Items)
-                                //    if (((messagesListBox.Items[i] as ListBoxItem).Tag as ActiveUp.Net.Mail.Message) == m)
                                 bool c = false;
                                 this.Dispatcher.Invoke(new WpfInvokeControlDelegate(delegate
                                                                                     {
-                                                                                        foreach (ListBoxItem i in messagesListBox.Items)
+                                                                                        foreach (ListBoxItem i in messagesListView.Items)
                                                                                             if ((i.Tag as Message) == m)
                                                                                                 c = true;
                                                                                     }));
@@ -107,12 +116,10 @@ namespace XMail
                             {
 
                                 // if the message isn't see-able...
-                                //for(int i = 0; i < messagesListBox.Items.Count; i++)//each (ListBoxItem i in messagesListBox.Items)
-                                //    if (((messagesListBox.Items[i] as ListBoxItem).Tag as ActiveUp.Net.Mail.Message) == m)
                                 bool c = false;
                                 this.Dispatcher.Invoke(new WpfInvokeControlDelegate(delegate
                                 {
-                                    foreach (ListBoxItem i in messagesListBox.Items)
+                                    foreach (ListBoxItem i in messagesListView.Items)
                                         if ((i.Tag as Message) == m)
                                             c = true;
                                 }));
@@ -129,12 +136,10 @@ namespace XMail
                             {
                                 //TODO: check if unread or not
                                 // if the message isn't see-able...
-                                //for(int i = 0; i < messagesListBox.Items.Count; i++)//each (ListBoxItem i in messagesListBox.Items)
-                                //    if (((messagesListBox.Items[i] as ListBoxItem).Tag as ActiveUp.Net.Mail.Message) == m)
                                 bool c = false;
                                 this.Dispatcher.Invoke(new WpfInvokeControlDelegate(delegate
                                 {
-                                    foreach (ListBoxItem i in messagesListBox.Items)
+                                    foreach (ListBoxItem i in messagesListView.Items)
                                         if ((i.Tag as Message) == m)
                                             c = true;
                                 }));
@@ -163,13 +168,15 @@ namespace XMail
                     if (e.ProgressPercentage == -1)
                     {
                         Message m = e.UserState as Message;
-                        messagesListBox.Dispatcher.Invoke(new WpfInvokeControlDelegate(delegate
+                        messagesListView.Invoke(new WpfInvokeControlDelegate(delegate
                                                                                        {
-                                                                                           messagesListBox.Items.Add(new ListBoxItem()
-                                                                                                                     {
-                                                                                                                         Content = m.Subject,
-                                                                                                                         Tag = m
-                                                                                                                     });
+                                                                                           System.Windows.Forms.ListViewItem li = new System.Windows.Forms.ListViewItem()
+                                                                                           {
+                                                                                               Text = m.Subject,
+                                                                                               Tag = m
+                                                                                           };
+                                                                                           li.SubItems.Add(new System.Windows.Forms.ListViewItem.ListViewSubItem(li, m.Date.ToString()));
+                                                                                           messagesListView.Items.Add(li);
                                                                                        }));
                     }
                 }
@@ -224,9 +231,9 @@ namespace XMail
             TaskManager.AddTask(new UpdateEmailTask());
         }
         
-        void MessagesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void MessagesListBox_SelectionChanged(object sender, EventArgs e)
         {
-            if (messagesListBox.SelectedIndex == -1)
+            if (messagesListView.SelectedIndices.Count == 0)
             {
                 messageViewer.NavigateToString(@"<html>
 <head></head>
@@ -238,15 +245,15 @@ No message was selected!
             }
             try
             {
-                StaticManager.Messages[messagesListBox.SelectedIndex].UnRead = false;
-                Message m = ((messagesListBox.SelectedItem as ListBoxItem).Tag as Message);
+                StaticManager.Messages[messagesListView.SelectedIndices[0]].UnRead = false;
+                Message m = ((messagesListView.SelectedItems[0] as System.Windows.Forms.ListViewItem).Tag as Message);
                 string s = m.BodyHtml.Text;
                 string s2 = m.BodyText.Text;
                 if (!string.IsNullOrEmpty(s))
                 {
                     s += "<br /><br />";
                     foreach (MimePart mp in m.Attachments)
-                        s += "<br />Attachement: " + mp.Filename + "<br />";
+                        s += "<br />Attachment: " + mp.Filename + "<br />";
                     messageViewer.NavigateToString(s);
                 }
                 else if (!string.IsNullOrEmpty(s2))
@@ -254,12 +261,11 @@ No message was selected!
                     s2 = s2.Replace("\n", "<br />");
                     s2 += "<br /><br />";
                     foreach (MimePart mp in m.Attachments)
-                        s2 += "<br />Attachement: " + mp.Filename + "<br />";
+                        s2 += "<br />Attachment: " + mp.Filename + "<br />";
                     messageViewer.NavigateToString("<html><body>" + s2 + "</body></html>");
                 }
                 else
-                    messageViewer.NavigateToString("<html><body><h2>This message has no text</body></html>");
-                
+                    messageViewer.NavigateToString("<html><body><h2>This message has no content</body></html>");
             }
             catch (Exception ex)
             {
@@ -285,14 +291,14 @@ ERROR: <br />" + ex.ToString().Replace("\n", "<br />")
                 {
                     try
                     {
-                        Message m = ((messagesListBox.SelectedItem as ListBoxItem).Tag as Message);
-                        int index = messagesListBox.SelectedIndex;
+                        Message m = ((messagesListView.SelectedItems[0] as System.Windows.Forms.ListViewItem).Tag as Message);
+                        int index = messagesListView.SelectedIndices[0];
                         if (index == -1)
                             return;
                         // Dont remove from server.
                         //StaticManager.Pop3.Pop3Client.DeleteMessage(messagesListBox.SelectedIndex + 1);
                         StaticManager.Messages.RemoveAt(index);
-                        messagesListBox.Items.RemoveAt(index);
+                        messagesListView.Items.RemoveAt(index);
                         File.Delete(System.Windows.Forms.Application.LocalUserAppDataPath + "\\..\\Messages\\" + UpdateEmailTask.GetAPath(m));
                     }
                     catch (Exception ex)
@@ -318,24 +324,72 @@ ERROR: <br />" + ex.ToString().Replace("\n", "<br />")
         {
             if (((InboxType)(mailboxesTreeView.SelectedItem as TreeViewItem).Tag) == InboxType.Inbox)
             {
-                messagesListBox.Items.Clear();
+                messagesListView.Items.Clear();
                 foreach (Message m in StaticManager.Messages)
-                    messagesListBox.Items.Add(new ListBoxItem() { Content = m.Subject, Tag = m });
+                {
+                    System.Windows.Forms.ListViewItem li = new System.Windows.Forms.ListViewItem()
+                    {
+                        Text = m.Subject,
+                        Tag = m
+                    };
+                    li.SubItems.Add(new System.Windows.Forms.ListViewItem.ListViewSubItem(li, m.Date.ToString()));
+                    messagesListView.Items.Add(li);
+                }
             }
             if (((InboxType)(mailboxesTreeView.SelectedItem as TreeViewItem).Tag) == InboxType.Unread)
             {
-                messagesListBox.Items.Clear();
+                messagesListView.Items.Clear();
                 foreach (Message m in StaticManager.Messages)
-                 if (m.UnRead)
-                    messagesListBox.Items.Add(m);
+                {
+                    if (m.UnRead)
+                    {
+                        System.Windows.Forms.ListViewItem li = new System.Windows.Forms.ListViewItem()
+                        {
+                            Text = m.Subject,
+                            Tag = m
+                        };
+                        li.SubItems.Add(new System.Windows.Forms.ListViewItem.ListViewSubItem(li, m.Date.ToString()));
+                        messagesListView.Items.Add(li);
+                    }
+                }
             }
             if (((InboxType)(mailboxesTreeView.SelectedItem as TreeViewItem).Tag) == InboxType.Sent)
             {
-                messagesListBox.Items.Clear();
+                messagesListView.Items.Clear();
                 foreach (SmtpMessage m in StaticManager.SentMessages)
-                    messagesListBox.Items.Add(new ListBoxItem() { Content = m.Subject, Tag = m });
+                {
+                    System.Windows.Forms.ListViewItem li = new System.Windows.Forms.ListViewItem()
+                    {
+                        Text = m.Subject,
+                        Tag = m
+                    };
+                    li.SubItems.Add(new System.Windows.Forms.ListViewItem.ListViewSubItem(li, m.Date.ToString()));
+                    messagesListView.Items.Add(li);
+                }
             } 
         }
         
+        
+        void menuItem1_Click(object sender, RoutedEventArgs e)
+        {
+            new Forms.OptionsWindow().ShowDialog();
+        }
+
+        // set up new email account
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            Forms.AddAccountForm f = new Forms.AddAccountForm();
+            f.ShowDialog();
+            if (f.DialogResult == System.Windows.Forms.DialogResult.Cancel)
+                return;
+            foreach (string fn in Directory.GetFiles(System.Windows.Forms.Application.LocalUserAppDataPath + "\\..\\Messages"))
+                File.Delete(fn);
+            foreach (string fn in Directory.GetFiles(System.Windows.Forms.Application.LocalUserAppDataPath + "\\..\\SentMessages"))
+                File.Delete(fn);
+
+            Classes.Settings.Account.RemoveAt(0);
+            Classes.Settings.Account.Add(f.NewAccountInfo);
+            Classes.Settings.Save();
+        }
     }
 }
