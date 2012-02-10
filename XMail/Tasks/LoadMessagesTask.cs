@@ -21,6 +21,7 @@ namespace XMail.Tasks
         {
         }
         Thread t = null;
+        Thread t2 = null;
         int total = 0, current = 0;
         
         public string Text {
@@ -50,8 +51,26 @@ namespace XMail.Tasks
                                                     StaticManager.Messages.Add((Message)Serializer.Deserialize(filename));
                                                     current++;
                                                 }
+
                                             }));
             t.Start();
+
+            t2 = new Thread(new EventHandler(delegate(object sender, EventArgs e)
+                                            {
+                                                // if the dir dont exist, then return - we have nothing to do here.
+                                                if (!Directory.Exists(System.Windows.Forms.Application.LocalUserAppDataPath + "\\..\\SentMessages"))
+                                                    return;
+                                                
+                                                string[] files = Directory.GetFiles(System.Windows.Forms.Application.LocalUserAppDataPath + "\\..\\SentMessages\\", "*.sent");
+                                                total = files.Length;
+                                                foreach (string filename in files)
+                                                {
+                                                    StaticManager.SentMessages.Add((SmtpMessage)Serializer.Deserialize(filename));
+                                                    current++;
+                                                }
+
+                                            }));
+            t2.Start();
         }
         
         public void Stop()
@@ -64,7 +83,14 @@ namespace XMail.Tasks
             {
                 // ignore, it probly finished
             }
-            
+            try
+            {
+                t2.Stop();
+            }
+            catch (Exception)
+            {
+                // ignore, it probly finished
+            }
         }
         
         public bool Done {

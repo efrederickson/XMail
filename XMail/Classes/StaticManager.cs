@@ -25,6 +25,8 @@ namespace XMail.Classes
         }
         
         public static List<Message> Messages = new List<Message>();
+
+        public static List<SmtpMessage> SentMessages = new List<SmtpMessage>();
         public static Pop3Controller Pop3 = null;
         public static Imap4Controller Imap4 = null;
         

@@ -36,7 +36,7 @@ namespace ActiveUp.Net.Mail
     /// Represents a parsed e-mail message.
     /// </summary>
 #if !PocketPC
-	[System.Serializable]
+    [System.Serializable]
 #endif
     public class Message : Header
     {
@@ -61,6 +61,23 @@ namespace ActiveUp.Net.Mail
         #endregion
 
         #region Properties
+
+        private bool _UNREAD = true;
+        /// <summary>
+        /// CUSTOM: ADDED BY LoDC 
+        /// IT tellz you if teh message was read
+        /// </summary>
+        public bool UnRead
+        {
+            get
+            {
+                return _UNREAD;
+            }
+            set
+            {
+                _UNREAD = value;
+            }
+        }
 
         /// <summary>
         /// Collection containing attachments of the message.
@@ -582,24 +599,24 @@ namespace ActiveUp.Net.Mail
         #region Public methods
 
         /*public string GetBodies(string boundary)
-		{
-			System.Text.StringBuilder sb = new System.Text.StringBuilder();
-			try
-			{
-				if((this.BodyHtml.Text!=null && this.BodyHtml.Text.Length>0) && (this.BodyText.Text!=null && this.BodyText.Text.Length>0))
-				{
-					sb.Append("--"+boundary);
-					boundary = "---AU_MimePart_"+Codec.GetUniqueString();
-					sb.Append("\r\nContent-Type: multipart/alternative;\r\n boundary=\""+boundary+"\"\r\n\r\n--"+boundary+"\r\nContent-Type: text/plain;\r\n charset=\""+this.BodyText.Charset+"\"\r\nContent-Transfer-Encoding: quoted-printable\r\n\r\n"+Codec.ToQuotedPrintable(this.BodyText.Text,this.BodyHtml.Charset));
-					sb.Append("\r\n\r\n--"+boundary+"\r\nContent-Type: text/html;\r\n charset=\""+this.BodyHtml.Charset+"\"\r\nContent-Transfer-Encoding: quoted-printable\r\n\r\n"+Codec.ToQuotedPrintable(this.BodyHtml.Text,this.BodyHtml.Charset));
-					sb.Append("\r\n\r\n--"+boundary+"--");
-				}
-				else if(this.BodyHtml.Text!=null && this.BodyHtml.Text.Length>0) sb.Append("--"+boundary+"\r\nContent-Type: text/html;\r\n charset=\""+this.BodyHtml.Charset+"\"\r\nContent-Transfer-Encoding: quoted-printable\r\n\r\n"+Codec.ToQuotedPrintable(this.BodyHtml.Text.TrimEnd('\n','\r'),this.BodyHtml.Charset));
-				else if(this.BodyText.Text!=null && this.BodyText.Text.Length>0) sb.Append("--"+boundary+"\r\nContent-Type: text/plain;\r\n charset=\""+this.BodyText.Charset+"\"\r\nContent-Transfer-Encoding: quoted-printable\r\n\r\n"+Codec.ToQuotedPrintable(this.BodyText.Text.TrimEnd('\n','\r'),this.BodyText.Charset));
-			} 
-			catch(System.Exception) {  }
-			return sb.ToString();
-		}*/
+        {
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            try
+            {
+                if((this.BodyHtml.Text!=null && this.BodyHtml.Text.Length>0) && (this.BodyText.Text!=null && this.BodyText.Text.Length>0))
+                {
+                    sb.Append("--"+boundary);
+                    boundary = "---AU_MimePart_"+Codec.GetUniqueString();
+                    sb.Append("\r\nContent-Type: multipart/alternative;\r\n boundary=\""+boundary+"\"\r\n\r\n--"+boundary+"\r\nContent-Type: text/plain;\r\n charset=\""+this.BodyText.Charset+"\"\r\nContent-Transfer-Encoding: quoted-printable\r\n\r\n"+Codec.ToQuotedPrintable(this.BodyText.Text,this.BodyHtml.Charset));
+                    sb.Append("\r\n\r\n--"+boundary+"\r\nContent-Type: text/html;\r\n charset=\""+this.BodyHtml.Charset+"\"\r\nContent-Transfer-Encoding: quoted-printable\r\n\r\n"+Codec.ToQuotedPrintable(this.BodyHtml.Text,this.BodyHtml.Charset));
+                    sb.Append("\r\n\r\n--"+boundary+"--");
+                }
+                else if(this.BodyHtml.Text!=null && this.BodyHtml.Text.Length>0) sb.Append("--"+boundary+"\r\nContent-Type: text/html;\r\n charset=\""+this.BodyHtml.Charset+"\"\r\nContent-Transfer-Encoding: quoted-printable\r\n\r\n"+Codec.ToQuotedPrintable(this.BodyHtml.Text.TrimEnd('\n','\r'),this.BodyHtml.Charset));
+                else if(this.BodyText.Text!=null && this.BodyText.Text.Length>0) sb.Append("--"+boundary+"\r\nContent-Type: text/plain;\r\n charset=\""+this.BodyText.Charset+"\"\r\nContent-Transfer-Encoding: quoted-printable\r\n\r\n"+Codec.ToQuotedPrintable(this.BodyText.Text.TrimEnd('\n','\r'),this.BodyText.Charset));
+            } 
+            catch(System.Exception) {  }
+            return sb.ToString();
+        }*/
 
         /// <summary>
         /// Converts a message to a message/rfc822 type MIME part, with a Content-Disposition set to "attachment".

@@ -109,7 +109,7 @@ namespace XMail.Tasks
         
         internal static string GetAPath(Message m)
         {
-            string o = m.Subject + "." + m.IndexOnServer;
+            string o = m.Subject + "." + m.MessageId;
             foreach (char c in Path.GetInvalidFileNameChars())
                 o = o.Replace(c, '_');
             foreach (char c in Path.GetInvalidPathChars())

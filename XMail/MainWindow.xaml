@@ -17,7 +17,8 @@
             <MenuItem
                 Header="File">
                 <MenuItem
-                    Header="New Email..." />
+                    Header="New Email..."
+                    Click="sendEmail_Click"/>
             </MenuItem>
             <MenuItem
                 Header="Edit" />
@@ -43,6 +44,7 @@
             KeyUp="MessagesListBox_KeyUp"
             Height="343" />
         <TreeView
+            SelectedItemChanged="mailboxesTreeView_SelectedItemChanged"
             Name="mailboxesTreeView"
             Grid.Column="0"
             Grid.Row="0"
@@ -52,10 +54,14 @@
             Width="168.5"
             Height="343">
             <TreeViewItem
-                Header="Inbox">
+                Header="Inbox"
+                Name="inboxTreeViewItem"
+                >
                 <TreeViewItem
+                    Name="unreadTreeViewItem"
                     Header="Unread" />
             </TreeViewItem>
+            <TreeViewItem Header="Sent" Name="sentTreeViewItem"></TreeViewItem>
         </TreeView>
         <Label
             Content="Task... Step 0 of 999"

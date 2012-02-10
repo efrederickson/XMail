@@ -43,9 +43,9 @@ namespace XMail
             splash.SetMessage("Creating user interface...");
             MainWindow a = XMail.MainWindow.Instance;
             splash.Close();
-            
+            a.ShowDialog();
             try{ // ugh. TODO: remove this requirement
-                a.ShowDialog();
+                
                 Tasks.TaskManager.StopAll();
                 StaticManager.Disconnect();
             }catch(Exception){}

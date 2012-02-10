@@ -9,6 +9,21 @@
     <AssemblyName>WindowsAPICodePack</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -28,6 +43,12 @@
     <Optimize>True</Optimize>
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
     <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore">
@@ -365,38 +386,26 @@
     <Compile Include="ThumbnailProviders\ThumbnailProviderAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="AppRestartRecovery" />
-    <Folder Include="Common" />
-    <Folder Include="CommonFileDialogs" />
-    <Folder Include="Controls" />
-    <Folder Include="Design" />
-    <Folder Include="DesktopWindowManager" />
-    <Folder Include="Dialogs" />
-    <Folder Include="ExplorerBrowser" />
-    <Folder Include="Interop" />
-    <Folder Include="Interop\Common" />
-    <Folder Include="Interop\Dialogs" />
-    <Folder Include="Interop\ExplorerBrowser" />
-    <Folder Include="Interop\KnownFolders" />
-    <Folder Include="Interop\PropertySystem" />
-    <Folder Include="Interop\ShellObjectWatcher" />
-    <Folder Include="Interop\StockIcons" />
-    <Folder Include="Interop\Taskbar" />
-    <Folder Include="KnownFolders" />
-    <Folder Include="Metadata" />
-    <Folder Include="NetworkList" />
-    <Folder Include="ExtendedLinguistics" />
-    <Folder Include="Resources" />
-    <Folder Include="ObjectModel" />
-    <Folder Include="PowerManagement" />
-    <Folder Include="PreviewHandlers" />
-    <Folder Include="PropertySystem" />
-    <Folder Include="SafeHandles" />
-    <Folder Include="Sensors" />
-    <Folder Include="ShellObjectWatcher" />
-    <Folder Include="StockIcons" />
-    <Folder Include="Taskbar" />
-    <Folder Include="ThumbnailProviders" />
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\CommandLinkWPF.xaml">

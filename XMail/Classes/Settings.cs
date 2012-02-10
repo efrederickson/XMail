@@ -15,7 +15,8 @@ namespace XMail.Classes
     /// </summary>
     public class Settings
     {
-        //TODO: encrypt password
+        public static List<string> Emails = new List<string>();
+
         public static AccountSettings Account = null;
         static string baseAccountPath = Application.LocalUserAppDataPath + "\\..\\Accounts";
         
@@ -26,11 +27,29 @@ namespace XMail.Classes
                 Directory.CreateDirectory(baseAccountPath);
             
             Account = AccountSettings.Load(baseAccountPath + "\\Accounts.xusr");
+
+            string base2 = baseAccountPath + "\\..\\Emails.list"; // up one folder
+            if (!File.Exists(base2))
+            {
+                using (StreamWriter sw = new StreamWriter(base2))
+                {
+                    sw.WriteLine(Account.Accounts[0].EmailAddress);
+                    sw.Close();
+                }
+            }
+            StreamReader sr = new StreamReader(base2);
+            while (sr.Peek() != -1)
+                Emails.Add(sr.ReadLine());
+            sr.Close();
         }
         
         public static void Save()
         {
             AccountSettings.Save(baseAccountPath + "\\Accounts.xusr", Account);
+            StreamWriter sw = new StreamWriter(baseAccountPath + "\\..\\Emails.list");
+            foreach (string email in Emails)
+                sw.WriteLine(email);
+            sw.Close();
         }
     }
 }
