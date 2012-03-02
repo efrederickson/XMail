@@ -157,7 +157,6 @@
       <SubType>Code</SubType>
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Serializer.cs" />
     <Compile Include="Tasks\ITask.cs" />
     <Compile Include="Tasks\LoadMessagesTask.cs" />
     <Compile Include="Tasks\TaskManager.cs" />

@@ -5,6 +5,7 @@
  */
 using System;
 using System.IO;
+using System.Windows;
 using ActiveUp.Net.Mail;
 using IExtendFramework;
 using IExtendFramework.Controls;
@@ -25,6 +26,20 @@ namespace XMail.Tasks
         
         public UpdateEmailTask()
         {
+        }
+        
+        private string regPath = "Software\\mlnlover11 Productions\\XMail";
+        private Microsoft.Win32.RegistryKey regKey;
+        public Microsoft.Win32.RegistryKey RegKey {
+            get {
+                if ((regKey == null)) {
+                    this.regKey = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(regPath, true);
+                    if ((this.regKey == null)) {
+                        this.regKey = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(regPath);
+                    }
+                }
+                return regKey;
+            }
         }
         
         public string Text {
@@ -49,10 +64,18 @@ namespace XMail.Tasks
                         try
                         {
                             emailCount = StaticManager.GetMessageCount();
+                            // this is to prevent getting the same email multiple times.
+                            DateTime now;
+                            if (RegKey.GetValue("UpdateEmail.LastDateChecked") == null)
+                                now = DateTime.Now;
+                            else
+                                now = Serializer.DeserializeObject<DateTime>(RegKey.GetValue("UpdateEmail.LastDateChecked") as byte[]);
+                            
                             for(current = 1; current <= emailCount; current++)
                             {
                                 Message m = StaticManager.GetMessage(current, false);
-                                
+                                if (m.ReceivedDate < now)
+                                    continue;
                                 // if it exists, ignore it.
                                 if (File.Exists(System.Windows.Forms.Application.LocalUserAppDataPath + "\\..\\Messages\\" + GetAPath(m) + ".xsm")
                                     || StaticManager.Messages.Contains(m))
@@ -73,16 +96,23 @@ namespace XMail.Tasks
                                     //    StaticManager.Pop3.Pop3Client.DeleteMessage
                                     //TODO: mark as read
                                 }
+                                RegKey.SetValue("UpdateEmail.LastDateChecked", Serializer.SerializeObject(now));
                             }
                         }
                         catch (Exception ex)
                         {
-                            TaskDialog.Show(new TaskDialogOptions()
-                                            {
-                                                Content = "Error: " + ex.Message,
-                                                Title = "Error",
-                                                ExpandedInfo = "Full Details: " + ex.ToString()
-                                            });
+                            MainWindow.Instance.Dispatcher.Invoke(
+                                new IExtendFramework.WpfInvokeControlDelegate(
+                                    delegate
+                                    {
+                                        TaskDialog.Show(new TaskDialogOptions()
+                                                        {
+                                                            Content = "Error: " + ex.Message,
+                                                            Title = "Error",
+                                                            ExpandedInfo = "Full Details: " + ex.ToString()
+                                                        });
+                                        
+                                    }));
                         }
                     }));
             t.Start();

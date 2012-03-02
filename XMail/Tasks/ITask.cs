@@ -30,10 +30,13 @@ namespace XMail.Tasks
         void Run();
         
         /// <summary>
-        /// Should stop the task right then with no prompting.
+        /// Should stop the task right then with no prompting, waiting, etc.
         /// </summary>
         void Stop();
         
+        /// <summary>
+        /// Whether this instance of the task has finished or not.
+        /// </summary>
         bool Done
         {get;}
     }

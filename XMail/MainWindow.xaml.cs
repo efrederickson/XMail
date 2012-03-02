@@ -58,10 +58,14 @@ namespace XMail
             this.Icon = BitmapFrame.Create(new Uri(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\Images\\XMail.ico", UriKind.RelativeOrAbsolute));
 
             windowsFormsHost1.Child = messagesListView;
-            messagesListView.Columns.Add("Subject");
-            messagesListView.Columns.Add("Date");
+            messagesListView.Columns.Add(new System.Windows.Forms.ColumnHeader() { Text = "Subject", Width = 300 });
+            messagesListView.Columns.Add(new System.Windows.Forms.ColumnHeader() { Text = "Date", Width = 250 });
             messagesListView.View = System.Windows.Forms.View.Details;
             messagesListView.SelectedIndexChanged += MessagesListBox_SelectionChanged;
+            messagesListView.FullRowSelect = true;
+            messagesListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
+            messagesListView.KeyUp += MessagesListView_KeyUp;
+            messagesListView.ColumnClick += delegate(object sender, System.Windows.Forms.ColumnClickEventArgs e) { messagesListView.Sort(); };
 
             sentTreeViewItem.Tag = InboxType.Sent;
             unreadTreeViewItem.Tag = InboxType.Unread;
@@ -177,6 +181,7 @@ namespace XMail
                                                                                            };
                                                                                            li.SubItems.Add(new System.Windows.Forms.ListViewItem.ListViewSubItem(li, m.Date.ToString()));
                                                                                            messagesListView.Items.Add(li);
+                                                                                           messagesListView.Sort();
                                                                                        }));
                     }
                 }
@@ -283,9 +288,9 @@ ERROR: <br />" + ex.ToString().Replace("\n", "<br />")
             Tasks.TaskManager.StopAll();
         }
         
-        void MessagesListBox_KeyUp(object sender, KeyEventArgs e)
+        void MessagesListView_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
         {
-            if (e.Key == Key.Delete)
+            if (e.KeyCode == System.Windows.Forms.Keys.Delete)
             {
                 if (StaticManager.IsPop3)
                 {

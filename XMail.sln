@@ -1,7 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
+# SharpDevelop 4.2.0.8485-alpha
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MailSystem.NET", "MailSystem.NET", "{90C65814-98AE-4F22-BD3B-82FC9AC9EAA8}"
+	ProjectSection(SolutionItems) = postProject
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveUp.Net", "MailSystem.NET\ActiveUp.Net\ActiveUp.Net.csproj", "{25DA9502-B959-4E81-9368-471AE231BCC0}"
 EndProject
@@ -25,12 +28,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveUp.Net.Pop3", "MailSy
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveUp.Net.Smtp", "MailSystem.NET\ActiveUp.Net.Smtp\ActiveUp.Net.Smtp.csproj", "{D9BCD15E-A438-4554-89D3-1CF122167FDD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMail", "XMAIL\XMail.csproj", "{C26B3486-66CF-4040-9399-CA2EACBB9F16}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IExtendFramework", "..\IExtendFramework\IExtendFramework\IExtendFramework.csproj", "{555B1E7D-E629-48A7-87A4-0AFBB69290FC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsAPICodePack", "WindowsAPICodePack\WindowsAPICodePack.csproj", "{ED235059-C297-499E-B48E-632D1C68F5AE}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{332C2F15-BCEF-4948-9E27-EE1D5C43C4E8}"
 	ProjectSection(SolutionItems) = preProject
 		lib\AxInterop.SHDocVw.dll = lib\AxInterop.SHDocVw.dll
@@ -38,6 +35,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{332C2F15-BCE
 		lib\Interop.SHDocVw.dll = lib\Interop.SHDocVw.dll
 		lib\SHDocVw.dll = lib\SHDocVw.dll
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMail", "XMAIL\XMail.csproj", "{C26B3486-66CF-4040-9399-CA2EACBB9F16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IExtendFramework", "..\IExtendFramework\IExtendFramework\IExtendFramework.csproj", "{555B1E7D-E629-48A7-87A4-0AFBB69290FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsAPICodePack", "WindowsAPICodePack\WindowsAPICodePack.csproj", "{ED235059-C297-499E-B48E-632D1C68F5AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

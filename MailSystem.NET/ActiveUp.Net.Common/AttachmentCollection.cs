@@ -70,6 +70,7 @@ namespace ActiveUp.Net.Mail
         /// Adds the specified attachment.
         /// </summary>
         /// <param name="attachment">The attachment.</param>
+        /// <param name="filename></param>
         public new void Add(byte[] attachment, string filename)
         {
             MimePart part = new MimePart(attachment, filename);
